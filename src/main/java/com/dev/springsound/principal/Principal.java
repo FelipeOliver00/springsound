@@ -26,7 +26,7 @@ public class Principal {
                     1- Cadastrar artisas
                     2- Cadastrar músicas
                     3- Lisar músicas
-                    4- Buscar mpusicas por artistas
+                    4- Buscar músicas por artistas
                     5- Pesquisar dados sobre um artista
                     
                     9- Sair
@@ -65,11 +65,15 @@ public class Principal {
     }
 
     private void buscarMusicasPorArtista() {
+        System.out.println("Buscar mpusicas de que artista? ");
+        var nome = leitura.nextLine();
+        List<Musica> musicas = artistaRepository.buscarMusicasPorArtista(nome);
+        musicas.forEach(System.out::println);
     }
 
     private void listarMusicas() {
         List<Artista> artistaList = artistaRepository.findAll();
-        artistaList.forEach(System.out::println);
+        artistaList.forEach(a -> a.getMusicas().forEach(System.out::println));
     }
 
     private void cadastrarMuscias() {
