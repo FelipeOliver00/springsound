@@ -4,6 +4,7 @@ import com.dev.springsound.model.Artista;
 import com.dev.springsound.model.Musica;
 import com.dev.springsound.model.TipoArtista;
 import com.dev.springsound.repository.ArtistaRepository;
+import com.dev.springsound.service.ConsultaChatGPT;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,6 +63,10 @@ public class Principal {
     }
 
     private void pesquisarDadosDoArtista() {
+        System.out.println("Pesquisar dados sobre qual artista? ");
+        var nome = leitura.nextLine();
+        var resposta = ConsultaChatGPT.obterInformacao(nome);
+        System.out.println(resposta.trim());
     }
 
     private void buscarMusicasPorArtista() {
