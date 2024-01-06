@@ -1,9 +1,12 @@
 package com.dev.springsound.principal;
 
 import com.dev.springsound.model.Artista;
+import com.dev.springsound.model.Musica;
 import com.dev.springsound.model.TipoArtista;
 import com.dev.springsound.repository.ArtistaRepository;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Principal {
@@ -21,7 +24,7 @@ public class Principal {
         while (opcao != 0) {
             var menu = """
                     1- Cadastrar artisas
-                    2- Buscar músicas
+                    2- Cadastrar músicas
                     3- Lisar músicas
                     4- Buscar mpusicas por artistas
                     5- Pesquisar dados sobre um artista
@@ -65,9 +68,24 @@ public class Principal {
     }
 
     private void listarMusicas() {
+        List<Artista> artistaList = artistaRepository.findAll();
+        artistaList.forEach(System.out::println);
     }
 
     private void cadastrarMuscias() {
+        System.out.println("Cadastrar música de que artista");
+        var nome = leitura.nextLine();
+        Optional<Artista> artista = artistaRepository.findByNomeContainingIgnoreCase(nome);
+        if (artista.isPresent()){
+            System.out.println("Informe o título da música:");
+            var nomeMusica = leitura.nextLine();
+            Musica musica = new Musica(nomeMusica);
+            musica.setArtista(artista.get());
+            artista.get().getMusicas().add(musica);
+            artistaRepository.save(artista.get());
+        } else {
+            System.out.println("Artista não encontrado");
+        }
     }
 
     private void cadastrarArtistas() {
